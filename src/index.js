@@ -1,5 +1,13 @@
+/**
+ * @name AppIndex
+ * @description Index para renderizar el app
+ */
 import React from "react";
 import ReactDOM from "react-dom";
+
+// Import Global CSS
+import "./normalize.min.css";
+import "./app.css";
 
 import App from "./components/App";
 const container = document.getElementById("app");

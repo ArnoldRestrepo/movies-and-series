@@ -1,0 +1,18 @@
+/**
+* @name: Header Component Styles
+*/
+
+.Header {
+  background: var(--dark-blue);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.Header-link {
+  color: var(--white-blue);
+}
+
+.Header-link:hover {
+  color: var(--light-blue);
+}
