@@ -10,6 +10,7 @@
   --white-blue: #f3fffc;
   --light-blue: #bbfaf0;
   --light-dark-blue: #83eded;
+  --black: #121212;
   --max-width: 1920px;
 }
 
@@ -29,4 +30,20 @@ h6 {
 body {
   font-family: "Open Sans", sans-serif;
   line-height: 1.4;
+  background: var(--white-blue);
+}
+
+/* Components Styles */
+.btn {
+  min-width: 64px;
+  padding: 8px;
+  border: none;
+  background: #acacac;
+  font-weight: 400;
+}
+
+.btn-primary {
+  background: var(--dark-blue);
+  color: var(--white-blue);
+  cursor: pointer;
 }
