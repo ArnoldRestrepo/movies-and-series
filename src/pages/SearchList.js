@@ -4,7 +4,7 @@ class SearchListItem extends React.Component {
   render() {
     return (
       <div>
-        <h4>Título: {this.props.result.title}</h4>
+        <h4>Título: {this.props.movie.Title} </h4>
       </div>
     );
   }
@@ -12,23 +12,22 @@ class SearchListItem extends React.Component {
 
 class SearchList extends React.Component {
   render() {
-    if (this.props.results !== null) {
-      return (
-        <section className="SearchList">
-          <article className="SearchLstGrid">
-            {this.props.results.map(Result => {
-              return (
-                <div key={Result.imdbID} className="SearchList-item">
-                  <SearchListItem result={Result} />
-                </div>
-              );
-            })}
-          </article>
-        </section>
-      );
-    } else {
-      return <h2>No se han encontrado resultados...</h2>;
+    if (this.props.data.Response === "False") {
+      return <h2>No se encontro ningun resultado intenta de nuevo</h2>;
     }
+    return (
+      <section className="SearchList">
+        <ul className="SearchListGrid">
+          {this.props.data.Search.map(movie => {
+            return (
+              <li key={movie.imdbID} className="SearchList-item">
+                <SearchListItem movie={movie} />
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
   }
 }
 

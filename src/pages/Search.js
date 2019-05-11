@@ -11,7 +11,12 @@ class Search extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      result: undefined,
+      data: {
+        Search: [],
+        totalResults: "",
+        Response: "",
+        Error: ""
+      },
       apiKey: "80f358e6",
       loading: false,
       error: null
@@ -26,21 +31,33 @@ class Search extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({ loading: true, error: null });
-    fetch(
-      `http://www.omdbapi.com/?apikey=${this.state.apiKey}&s=${
-        this.state.query
-      }`
-    ).then(response => {
-      response.json().then(data =>
-        this.setState({
-          result: data
-        })
-      );
-    });
-    console.log(this.state.result);
+    this.fetchSearch();
   };
+
+  fetchSearch = async () => {
+    this.setState({ loading: true, error: null });
+
+    try {
+      const response = await fetch(
+        `http://www.omdbapi.com/?apikey=${this.state.apiKey}&s=${
+          this.state.query
+        }`
+      );
+      const data = await response.json();
+
+      this.setState({
+        loading: false,
+        data: data
+      });
+    } catch (error) {
+      this.setState({ error: error });
+    }
+  };
+
   render() {
+    if (this.state.error) {
+      return `Error: ${this.state.error.message}`;
+    }
     return (
       <React.Fragment>
         <Header />
@@ -51,7 +68,11 @@ class Search extends React.Component {
           </h2>
           <section className="MovieHome-description" />
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />
-          <SearchList result={this.state.result} />
+          {this.state.loading && <div className="Loader">Cargando...</div>}
+          <span>
+            {this.state.data.totalResults || 0} Resultados Encontrados
+          </span>
+          <SearchList data={this.state.data} />
         </main>
       </React.Fragment>
     );
