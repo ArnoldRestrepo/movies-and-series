@@ -4,26 +4,36 @@ import Header from "../components/Header";
 import "./css/Search.css";
 
 class Search extends React.Component {
-  state = {
-    query: {
-      search: "",
-      serie: false,
-      movie: false
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      res: null,
+      apiKey: "80f358e6"
+    };
+  }
 
   handleChange = e => {
-    console.log(e.target.value);
-
-    if (e.target.value.lenght >= 3) {
-      debugger;
-      this.history.push("/SearchList");
-    }
+    this.setState({
+      query: e.target.value
+    });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("No se envío");
+    fetch(
+      `http://www.omdbapi.com/?apikey=${this.state.apiKey}&s=${
+        this.state.query
+      }`
+    ).then(response => {
+      response.json().then(data =>
+        this.setState({
+          res: data
+        })
+      );
+    });
+    console.log(this.state.res);
   };
   render() {
     return (
