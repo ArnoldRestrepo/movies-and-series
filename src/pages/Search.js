@@ -1,16 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import SearchList from "../pages/SearchList";
+import Form from "../components/Form";
 import "./css/Search.css";
 
 class Search extends React.Component {
+  // Inicializamos los estados del Componente de Busqueda
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      res: null,
-      apiKey: "80f358e6"
+      result: undefined,
+      apiKey: "80f358e6",
+      loading: false,
+      error: null
     };
   }
 
@@ -22,6 +26,7 @@ class Search extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ loading: true, error: null });
     fetch(
       `http://www.omdbapi.com/?apikey=${this.state.apiKey}&s=${
         this.state.query
@@ -29,11 +34,11 @@ class Search extends React.Component {
     ).then(response => {
       response.json().then(data =>
         this.setState({
-          res: data
+          result: data
         })
       );
     });
-    console.log(this.state.res);
+    console.log(this.state.result);
   };
   render() {
     return (
@@ -45,39 +50,8 @@ class Search extends React.Component {
             <strong>Mercado</strong>
           </h2>
           <section className="MovieHome-description" />
-          <form className="MovieHomeForm" onSubmit={this.handleSubmit}>
-            <input
-              className="MovieHomeForm-search"
-              type="text"
-              name="SearchQuery"
-              placeholder="Ingresa tu búsqueda"
-              onChange={this.handleChange}
-              required
-            />
-            <div className="MovieHomeForm-checkboxes">
-              <label htmlFor="">
-                <input
-                  type="radio"
-                  onChange={this.handleChange}
-                  name="type"
-                  value="Serie"
-                />
-                Por Serie
-              </label>
-              <label htmlFor="">
-                <input
-                  type="radio"
-                  onChange={this.handleChange}
-                  name="type"
-                  value="Movie"
-                />
-                Por Película
-              </label>
-            </div>
-            <button className="btn btn-primary" onSubmit={this.handleSubmit}>
-              Buscar
-            </button>
-          </form>
+          <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />
+          <SearchList result={this.state.result} />
         </main>
       </React.Fragment>
     );
