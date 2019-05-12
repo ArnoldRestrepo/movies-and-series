@@ -1,5 +1,6 @@
 import React from "react";
 
+// Componente del Formulario de Búsqueda
 class Form extends React.Component {
   render() {
     return (

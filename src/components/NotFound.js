@@ -1,7 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Header from "./Header";
+import "./css/NotFound.css";
 
+// Retornamos este componente en caso de que la url no sea la correcta
 function NotFound() {
-  return <h1>Página no encontrada</h1>;
+  return (
+    <React.Fragment>
+      <Header />
+      <h1 className="NotFound-title">Página no encontrada</h1>
+      <Link className="NotFound-link" to="/">
+        Regresar al Buscador
+      </Link>
+    </React.Fragment>
+  );
 }
 
 export default NotFound;

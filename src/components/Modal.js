@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./css/Modal.css";
 
+// Portal para crear el modal con los detalles de cada Item
 function Modal(props) {
   if (!props.isOpen) {
     return null;

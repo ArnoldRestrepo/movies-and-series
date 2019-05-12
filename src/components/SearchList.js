@@ -2,6 +2,7 @@ import React from "react";
 import "./css/SearchList.css";
 import Modal from "../components/Modal";
 
+//Componente para cada Item con el Portal para el Modal
 class SearchListItem extends React.Component {
   state = {
     modalIsOpen: false
@@ -58,6 +59,7 @@ class SearchListItem extends React.Component {
   }
 }
 
+// Componente de la Lista de Items, si la búsqueda nos da como resultado falsa, cargamos un mensaje de error para evitar que se rompa la aplicación
 class SearchList extends React.Component {
   render() {
     if (this.props.data.Response === "False") {
