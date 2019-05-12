@@ -10,20 +10,18 @@ Descargue este repositorio o clonelo una vez en su repositorio local proceda a i
 
 Antes de empezar a editar recuerde tener instalado **Node.js >v5** y **npm** para correr el proyecto
 
-### Instalación
+### Instalación y Visualización
 
-Para correr el proyecto tendrá los siguientes comandos
+Para correr el proyecto se deben realizar los siguientes comandos:
 
-Para trabajar en desarrollo
+```
+npm install
+```
+
+y luego:
 
 ```
 npm start
-```
-
-Para enviar a producción
-
-```
-npm build
 ```
 
 ## Creado con:
