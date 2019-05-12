@@ -29,3 +29,15 @@
 .MovieHomeForm-checkboxes label {
   padding: 0 0.5rem;
 }
+
+.MovieHome-results {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: left;
+}
+
+.LoadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

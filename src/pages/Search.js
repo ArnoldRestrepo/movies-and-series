@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import SearchList from "../pages/SearchList";
+import SearchList from "../components/SearchList";
 import Form from "../components/Form";
 import "./css/Search.css";
 
@@ -17,6 +17,7 @@ class Search extends React.Component {
         Response: "",
         Error: ""
       },
+      nextPage: 1,
       apiKey: "80f358e6",
       loading: false,
       error: null
@@ -31,6 +32,14 @@ class Search extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({
+      data: {
+        Search: [],
+        totalResults: "",
+        Response: "",
+        Error: ""
+      }
+    });
     this.fetchSearch();
   };
 
@@ -41,13 +50,19 @@ class Search extends React.Component {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=${this.state.apiKey}&s=${
           this.state.query
-        }`
+        }&page=${this.state.nextPage}`
       );
       const data = await response.json();
 
       this.setState({
         loading: false,
-        data: data
+        data: {
+          Search: [].concat(this.state.data.Search, data.Search),
+          totalResults: data.totalResults,
+          Response: data.Response,
+          Error: data.Error
+        },
+        nextPage: this.state.nextPage + 1
       });
     } catch (error) {
       this.setState({ error: error });
@@ -69,10 +84,25 @@ class Search extends React.Component {
           <section className="MovieHome-description" />
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />
           {this.state.loading && <div className="Loader">Cargando...</div>}
-          <span>
-            {this.state.data.totalResults || 0} Resultados Encontrados
-          </span>
-          <SearchList data={this.state.data} />
+          <section className="MovieHome-results">
+            {this.state.data.totalResults && (
+              <span className="MovieHome-results-number">
+                <strong>{this.state.data.totalResults}</strong> Resultados
+                Econtrados
+              </span>
+            )}
+            <SearchList data={this.state.data} />
+            {this.state.data.totalResults > 0 && (
+              <div className="LoadMore">
+                <button
+                  onClick={() => this.fetchSearch()}
+                  className="btn btn-secondary"
+                >
+                  Cargar Más...
+                </button>
+              </div>
+            )}
+          </section>
         </main>
       </React.Fragment>
     );
